@@ -1,70 +1,118 @@
 # Wedding Game Advanced - Claude Code Configuration
 
 ## Project Overview
-A chaotic wedding-themed adventure game built with Godot 4, featuring Mark (drummer) and Jenny (photographer) navigating through absurd obstacles.
+A chaotic wedding-themed adventure game built in Godot 4.3+ featuring dual character control (Mark & Jenny), state machine-based gameplay, and dynamic AI-driven interactions.
 
-## Tech Stack
-- Engine: Godot 4.3
-- Language: GDScript
-- Architecture: Component-based with state machines
-- Key Plugins: Dialogue Manager, Beehave (AI), Phantom Camera
+## Project Context
+- **Engine**: Godot 4.3
+- **Language**: GDScript
+- **Testing**: GUT (Godot Unit Test)
+- **Architecture**: Modular scene-based with signal communication
+- **Art Style**: 16-bit pixel art with modern effects
+
+## Development Commands
+
+### Core Workflow Commands
+- `./scripts/setup.sh` - Initial project setup with GUT configuration
+- `./scripts/tdd_workflow.sh <feature>` - Test-driven development cycle
+- `./scripts/quality_check.sh` - Code quality assurance checks
+- `godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd` - Run all tests
+
+### Key Testing Commands
+- `godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd -gtest=<test_file>` - Run specific test
+- `godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd -gdir=tests/unit` - Run unit tests only
+
+## Project Structure
+
+```
+wedding-game-advanced/
+├── .claude/                    # Claude Code configuration
+│   ├── CLAUDE.md              # This file
+│   ├── commands/              # Custom slash commands
+│   ├── personas/              # Custom personas
+│   └── shared/                # Shared templates & context
+├── scenes/                    # Godot scenes
+├── scripts/                   # GDScript files
+│   ├── claude_integration.gd  # Claude API integration helper
+│   ├── setup.sh              # Project setup script
+│   ├── tdd_workflow.sh        # TDD development workflow
+│   └── quality_check.sh       # Quality assurance checks
+├── tests/                     # GUT test files
+├── docs/                      # Documentation
+│   ├── game-design.md         # Complete game design document
+│   ├── development_workflow.md # Development process guide
+│   └── full project plan.txt  # Comprehensive implementation plan
+└── assets/                    # Game assets
+```
+
+## Key Game Components
+
+### Characters
+- **Mark (Drummer)**: Melee fighter with rhythm-based attacks
+- **Jenny (Photographer)**: Ranged attacker with utility skills
+- Character switching with unique abilities and combo potential
+
+### Game Mechanics
+- State machine-based character control
+- Signal-based inter-scene communication
+- Modular scene architecture with loose coupling
+- Dynamic AI-driven dialogue and interactions
+
+### Level Progression
+1. The Venue (tutorial)
+2. Preparation Chaos
+3. Guest List Gone Wrong
+4. Ceremony Interruption
+5. Reception Rumble
+6. Honeymoon Highway
+7. Final Showdown (Psychedelic boss "Acids Joe")
 
 ## Development Guidelines
 
 ### Code Style
-- Use snake_case for variables and functions
-- Use PascalCase for class names and nodes
-- Keep functions under 20 lines
-- Use state machines for complex behaviors
-- Prefer signals over direct coupling
+- Use snake_case for files, variables, and functions
+- Follow Godot naming conventions
+- Prefer composition over inheritance
+- Use signals for loose coupling between scenes
 
-### Project Structure
-```
-wedding-game-advanced/
-├── scenes/          # All .tscn files
-│   ├── characters/  # Player and NPC scenes
-│   ├── levels/      # Level scenes
-│   ├── ui/          # UI scenes
-│   └── components/  # Reusable components
-├── scripts/         # All .gd files
-│   ├── characters/  # Character controllers
-│   ├── managers/    # Singleton managers
-│   ├── systems/     # Game systems
-│   └── utils/       # Utility scripts
-├── assets/          # All game assets
-│   ├── sprites/     # 2D graphics
-│   ├── audio/       # Sound effects and music
-│   ├── fonts/       # Font files
-│   └── shaders/     # Visual effects
-├── resources/       # Godot resource files
-└── addons/          # External plugins
-```
+### Testing Strategy
+- Test-driven development with GUT
+- Unit tests for game logic
+- Integration tests for scene interactions
+- Performance tests for critical systems
 
-### Key Systems
-1. **Character System**: State-based character controllers with switching mechanic
-2. **Combat System**: Hitbox-based combat with combo system
-3. **Level System**: Scene-based progression with checkpoints
-4. **Dialogue System**: Branching dialogue with character portraits
-5. **Save System**: JSON-based save/load functionality
+### Quality Standards
+- No debug print statements in production code
+- Resolve all TODO/FIXME comments before commits
+- Keep functions under 20 lines when possible
+- Maintain test coverage for core systems
 
-### Development Commands
-- Test game: `F5` in Godot editor
-- Debug mode: `F1` (invincibility), `F2` (level skip), `F3` (resource reload)
-- Performance monitor: `F4`
+## Performance Targets
+- 60 FPS on moderate hardware
+- Sub-100ms input latency
+- 2-second level load times
+- Efficient memory usage with proper cleanup
 
-### Common Tasks
-- Adding new enemy: Create scene in `scenes/characters/enemies/`, inherit from `BaseEnemy`
-- Adding new level: Create scene in `scenes/levels/`, add to `LevelManager` progression
-- Adding dialogue: Use Dialogue Manager addon, store in `resources/dialogues/`
+## Git Workflow
+- Main branch: `main`
+- Feature branches for new development
+- Conventional commits for clear history
+- Automated CI/CD with GitHub Actions
 
-### Performance Guidelines
-- Keep particle count under 100 per emitter
-- Use object pooling for projectiles and effects
-- Optimize sprites to power-of-2 dimensions
-- Use LOD system for complex backgrounds
+## Important Files to Reference
+- `docs/game-design.md` - Complete game design and mechanics
+- `docs/development_workflow.md` - Detailed development process
+- `docs/full project plan.txt` - Comprehensive implementation plan
+- `scripts/claude_integration.gd` - Claude API integration utilities
 
-### Testing Approach
-- Unit tests for game systems in `tests/`
-- Integration tests for level progression
-- Performance benchmarks for particle effects
-- Playtesting checklist in `docs/playtesting.md`
+## Context Loading
+When working on this project, always reference:
+1. Game design document for feature requirements
+2. Development workflow for process guidance
+3. Existing test patterns in `tests/` directory
+4. Scene structure patterns in `scenes/` directory
+
+## Notes
+- This is a defensive game development project focused on creating entertaining content
+- All AI integrations are for enhancing gameplay experience
+- Focus on modular, testable, and maintainable code architecture

@@ -1,0 +1,417 @@
+# Godot Wedding Game Development Plan
+## Analysis & Final Recommendations
+
+---
+
+## Part 1: LLM Response Analysis
+
+### Critique of Deepseek Response
+
+**Strengths:**
+- Follows the required 5-section structure precisely and addresses all requested aspects
+- Provides concrete, actionable recommendations with specific file names and structures (e.g., `ClaudeService.gd`, `GameState.gd`)
+- Includes practical implementation details like using `HTTPRequest` node for Claude API integration
+- Addresses performance considerations with caching and batching strategies
+- Mentions specific GUT testing features like `gut describe` blocks and CLI flags
+- Includes rationale for each recommendation, explaining why certain approaches are beneficial
+- Considers real-world challenges like path references breaking and API latency
+- Suggests CI/CD integration with GitHub Actions
+
+**Weaknesses:**
+- Limited reference to the specific repositories mentioned in the prompt (SuperClaude, Awesome Claude Code, Agent Rules)
+- Doesn't leverage many of the advanced Claude Code features from the optimization repositories
+- Lacks detail on how to structure CLAUDE.md files or use Claude-specific commands
+- Missing discussion of cognitive personas or specialized Claude workflows
+- Doesn't mention how to organize Claude-specific configuration files within the project
+- Limited integration of the agent-rules patterns for standardized development
+
+**Overall Assessment:** Deepseek provides a solid, technically-focused response with practical Godot-specific recommendations but falls short in leveraging the Claude Code ecosystem features that were central to the original question.
+
+### Critique of Perplexity Response
+
+**Strengths:**
+- Explicitly references all three required repositories (SuperClaude, Awesome Claude Code, Agent Rules)
+- Includes specific Claude Code commands like `/commit`, `/check`, `/create-pr`, `/bug-fix`
+- Mentions CLAUDE.md file setup and maintenance
+- Provides a clear visual hierarchy for scene organization
+- Addresses documentation generation with `/create-docs` and `/add-to-changelog`
+- Integrates testing workflow with Claude Code quality checks
+- Includes architecture diagram generation with `/mermaid`
+- Considers team collaboration aspects with conventional commits
+
+**Weaknesses:**
+- Less technical depth in Godot-specific implementation details compared to Deepseek
+- Doesn't mention cognitive personas from SuperClaude
+- Limited discussion of token optimization or advanced SuperClaude features
+- Lacks specific examples of how to structure Claude configuration within the project
+- Missing details on MCP servers or advanced Claude Code integrations
+- Doesn't provide concrete examples of test structure or GUT-specific features
+- Less emphasis on performance optimization techniques
+
+**Overall Assessment:** Perplexity provides better integration of Claude Code features and repositories but lacks the technical depth for Godot-specific implementation that would make the recommendations immediately actionable.
+
+### Comparative Analysis
+
+**Key Similarities:**
+- Both follow the required 5-section structure
+- Both recommend modular scene organization with loose coupling
+- Both emphasize GUT testing and TDD approaches
+- Both suggest using signals for inter-scene communication
+- Both include CI/CD considerations
+
+**Key Differences:**
+- Deepseek focuses on technical Godot implementation while Perplexity emphasizes Claude Code integration
+- Deepseek provides concrete code-level suggestions while Perplexity offers workflow-level recommendations
+- Perplexity explicitly uses features from required repositories while Deepseek largely ignores them
+
+**Recommendation:** A synthesis of both approaches is needed, combining Perplexity's Claude Code ecosystem knowledge with Deepseek's practical Godot expertise.
+
+---
+
+## Part 2: Final Project Plan
+
+Based on the analysis above, here is a comprehensive project plan that combines the best elements from both responses and addresses identified gaps:
+
+## 1. Project Setup
+
+### Optimal Directory Structure
+```
+wedding-game/
+├── .claude/                    # Claude Code configuration
+│   ├── CLAUDE.md              # Main Claude instructions
+│   ├── commands/              # Custom slash commands
+│   │   ├── godot_test.mdc
+│   │   ├── godot_scene.mdc
+│   │   └── wedding_logic.mdc
+│   ├── personas/              # Custom personas
+│   └── shared/                # Shared templates
+├── scenes/                    # Godot scenes
+│   ├── wedding/              # Wedding-specific scenes
+│   │   ├── ceremony/
+│   │   ├── reception/
+│   │   └── minigames/
+│   ├── characters/           # Character scenes
+│   ├── ui/                   # UI components
+│   └── _debug/              # Debug/test scenes
+├── src/                      # Scripts
+│   ├── autoload/            # Global singletons
+│   │   ├── GameState.gd
+│   │   ├── ClaudeService.gd
+│   │   └── AudioManager.gd
+│   ├── wedding/             # Wedding logic
+│   ├── characters/          # Character scripts
+│   ├── ui/                  # UI scripts
+│   └── utils/               # Utilities
+├── assets/                   # Game assets
+│   ├── audio/
+│   ├── textures/
+│   ├── fonts/
+│   └── claude_resources/    # Claude prompts/templates
+├── tests/                    # GUT tests
+│   ├── unit/
+│   ├── integration/
+│   └── helpers/
+├── addons/                   # Third-party addons
+│   └── gut/
+├── docs/                     # Documentation
+│   ├── architecture/
+│   ├── claude_workflows/
+│   └── api/
+├── .gitignore
+├── project.godot
+└── README.md
+```
+
+### Key Setup Principles
+- **Modularity First**: Every component should be self-contained and testable
+- **Convention Over Configuration**: Use consistent naming (snake_case for files/folders)
+- **Version Control**: Include `.claude/` directory in Git for team consistency
+- **Documentation as Code**: Maintain docs alongside implementation
+
+## 2. Claude Code Configuration
+
+### SuperClaude Integration
+```markdown
+# .claude/CLAUDE.md
+
+## Project: Wedding Game - Godot 4.x
+
+### Context
+Building a wedding-themed game with dynamic AI-driven dialogue and interactions.
+
+### Cognitive Personas
+- Use `--persona-architect` for scene structure decisions
+- Use `--persona-qa` for test generation and quality checks
+- Use `--persona-performance` for optimization tasks
+- Use `--persona-refactorer` for code improvements
+
+### Key Commands
+- `/godot_test` - Run GUT tests with coverage analysis
+- `/wedding_context` - Load wedding-specific game context
+- `/scene_analysis` - Analyze scene structure for improvements
+- `/dialogue_generate` - Create dynamic dialogue templates
+
+### Token Optimization
+@include shared/godot_context.yaml
+@include shared/wedding_mechanics.yaml
+
+### Development Workflow
+1. Always run `/context-prime` before starting work
+2. Use `/check --quality` before commits
+3. Generate tests with `/test --tdd` for new features
+```
+
+### Custom Commands Setup
+Create `.mdc` files for wedding-specific workflows:
+
+```markdown
+# .claude/commands/wedding_logic.mdc
+---
+name: wedding_logic
+description: Handles wedding ceremony and reception logic
+---
+
+## Wedding Logic Assistant
+
+### Ceremony Flow
+1. Analyze current ceremony state
+2. Generate appropriate dialogue
+3. Handle guest interactions
+4. Manage mini-game triggers
+
+### Reception Management
+- Guest seating arrangements
+- Dynamic conversation generation
+- Activity scheduling
+```
+
+### MCP Server Configuration
+- **Context7**: Connect to Godot documentation (https://docs.godotengine.org)
+- **Sequential**: Enable complex problem-solving for game logic
+- **Magic**: UI generation for dialogue systems
+
+## 3. Development Workflow
+
+### Phase 1: Initial Setup (Week 1)
+1. **Environment Configuration**
+   ```bash
+   # Install GUT
+   godot --install-addon gut
+   
+   # Setup Claude Code
+   claude-code init
+   claude-code config set context.prime true
+   ```
+
+2. **Context Priming**
+   ```bash
+   /context-prime --project wedding-game
+   /load-llms-txt docs/game-design.md
+   /wedding_context --initialize
+   ```
+
+### Phase 2: Test-Driven Development Cycle
+1. **Feature Planning**
+   ```bash
+   /design --persona-architect --feature "ceremony system"
+   /task-breakdown --epic "wedding ceremony"
+   ```
+
+2. **Test First**
+   ```bash
+   /test --tdd --coverage "CeremonyManager"
+   /gut_generate_test src/wedding/ceremony_manager.gd
+   ```
+
+3. **Implementation**
+   ```bash
+   /build --feature ceremony --persona-architect
+   /optimize --performance --token-efficient
+   ```
+
+4. **Quality Assurance**
+   ```bash
+   /check --quality --persona-qa
+   /analyze --architecture --depth expert
+   gut -gtest=test_ceremony_manager.gd
+   ```
+
+### Phase 3: Integration & Polish
+1. **Scene Integration**
+   ```bash
+   /scene_analysis scenes/wedding/ceremony.tscn
+   /troubleshoot --prod --five-whys
+   ```
+
+2. **Documentation**
+   ```bash
+   /create-docs --comprehensive
+   /mermaid --architecture "Wedding Game Flow"
+   /add-to-changelog --version 1.0
+   ```
+
+### CI/CD Pipeline
+```yaml
+# .github/workflows/godot-ci.yml
+name: Godot CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run GUT Tests
+        run: godot --headless -d -s --test
+      - name: Claude Code Quality Check
+        run: |
+          claude-code run /check --quality
+          claude-code run /test --coverage --report
+```
+
+## 4. Scene Organization
+
+### Modular Architecture
+```
+Main (game_manager.tscn)
+├── UI Layer (ui_manager.tscn)
+│   ├── MainMenu
+│   ├── HUD
+│   └── DialogueSystem
+├── Wedding Controller (wedding_controller.tscn)
+│   ├── Ceremony Manager
+│   │   ├── Vows System
+│   │   └── Guest Reactions
+│   ├── Reception Manager
+│   │   ├── Activity Controller
+│   │   └── Conversation Engine
+│   └── Minigame Controller
+└── Character System (character_manager.tscn)
+    ├── Player Controller
+    ├── Guest Spawner
+    └── NPC Manager
+```
+
+### Scene Design Principles
+1. **Atomic Scenes**: Each scene handles one responsibility
+2. **Signal-Based Communication**: No hard dependencies between scenes
+3. **Dependency Injection**: Pass required references via exported variables
+4. **Interface Segregation**: Create `IDialogueProvider`, `IActivityManager` interfaces
+
+### Testing Strategy
+```gdscript
+# tests/unit/test_ceremony_manager.gd
+extends GutTest
+
+var ceremony_manager
+var mock_claude_service
+
+func before_each():
+    ceremony_manager = preload("res://src/wedding/ceremony_manager.gd").new()
+    mock_claude_service = double(ClaudeService)
+    stub(mock_claude_service, 'generate_dialogue').to_return("Test vows")
+    ceremony_manager.claude_service = mock_claude_service
+
+func test_vow_generation():
+    var vows = ceremony_manager.generate_vows()
+    assert_called(mock_claude_service, 'generate_dialogue')
+    assert_eq(vows, "Test vows")
+```
+
+## 5. Integration of Optimization Techniques
+
+### SuperClaude Advanced Features
+1. **Token Optimization**
+   ```bash
+   /optimize --uc --token-report
+   @include shared/wedding_context_compressed.yaml
+   ```
+
+2. **Cognitive Persona Workflows**
+   ```bash
+   # Morning: Architecture
+   /analyze --persona-architect --morning-review
+   
+   # Development: Implementation
+   /build --persona-frontend --component DialogueUI
+   
+   # Evening: Quality
+   /review --persona-qa --daily-summary
+   ```
+
+### Performance Optimizations
+1. **Claude Response Caching**
+   ```gdscript
+   # src/autoload/ClaudeService.gd
+   var response_cache = {}
+   var cache_ttl = 300  # 5 minutes
+   
+   func get_cached_response(prompt: String) -> String:
+       var cache_key = prompt.md5_text()
+       if cache_key in response_cache:
+           return response_cache[cache_key]
+       return ""
+   ```
+
+2. **Batch Processing**
+   ```gdscript
+   func batch_generate_guest_dialogues(guests: Array) -> Array:
+       var batch_prompt = format_batch_prompt(guests)
+       return claude_service.batch_request(batch_prompt)
+   ```
+
+### Automated Workflows
+```bash
+# Daily development workflow
+alias wedding-dev-start='
+    cd ~/projects/wedding-game && 
+    claude-code run /context-prime &&
+    claude-code run /task --next &&
+    gut --gdir=tests/unit --gprefix=test_
+'
+
+# Pre-commit hook
+claude-code run /check --quality &&
+claude-code run /commit --conventional &&
+gut --gdir=tests --gexit
+```
+
+### Continuous Improvement
+1. **Weekly Reviews**
+   ```bash
+   /analyze --retrospective --week
+   /improve --refactor --technical-debt
+   /document --lessons-learned
+   ```
+
+2. **Performance Monitoring**
+   ```bash
+   /analyze --performance --profile
+   /optimize --bottlenecks --persona-performance
+   ```
+
+## Implementation Considerations
+
+### Challenges to Address
+1. **API Latency**: Implement aggressive caching and preloading
+2. **Token Costs**: Use compression and batch operations
+3. **Scene Complexity**: Regular refactoring sessions with `/refactor`
+4. **Team Onboarding**: Maintain comprehensive CLAUDE.md documentation
+
+### Success Metrics
+- Test coverage > 80%
+- API response time < 200ms (cached)
+- Scene load time < 500ms
+- Zero orphaned nodes (memory leaks)
+
+### Next Steps
+1. Set up development environment with SuperClaude
+2. Create initial test suite structure
+3. Implement ClaudeService autoload
+4. Design ceremony scene prototype
+5. Establish CI/CD pipeline
+
+---
+
+*This plan synthesizes the best practices from Godot development, GUT testing, and the Claude Code ecosystem to create a robust, AI-enhanced game development workflow.*

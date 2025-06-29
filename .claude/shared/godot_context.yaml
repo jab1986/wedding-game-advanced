@@ -1,0 +1,49 @@
+# Godot Wedding Game - Shared Context Template
+# This file contains common context information for Claude Code to reference
+
+project_info:
+  name: "Wedding Game Advanced"
+  engine: "Godot 4.3"
+  language: "GDScript"
+  genre: "Action-Adventure Platformer"
+  theme: "Wedding Chaos"
+
+technical_stack:
+  engine_version: "4.3"
+  testing_framework: "GUT (Godot Unit Test)"
+  architecture: "Modular scene-based"
+  communication: "Signal-based"
+  art_style: "16-bit pixel art"
+
+key_directories:
+  scenes: "scenes/"
+  scripts: "scripts/"
+  tests: "tests/"
+  docs: "docs/"
+  assets: "assets/"
+  claude_config: ".claude/"
+
+core_commands:
+  setup: "./scripts/setup.sh"
+  tdd_workflow: "./scripts/tdd_workflow.sh <feature>"
+  quality_check: "./scripts/quality_check.sh"
+  run_all_tests: "godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd"
+  run_specific_test: "godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd -gtest=<test_file>"
+
+coding_standards:
+  naming_convention: "snake_case"
+  max_function_length: 20
+  test_coverage_minimum: "80%"
+  no_debug_prints: true
+  resolve_todos: true
+
+performance_targets:
+  target_fps: 60
+  max_input_latency: "100ms"
+  max_load_time: "2 seconds"
+  memory_efficiency: true
+
+git_workflow:
+  main_branch: "main"
+  commit_style: "conventional"
+  ci_cd: "GitHub Actions"
