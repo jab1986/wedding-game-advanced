@@ -1,0 +1,41 @@
+name: Godot CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3-stable
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup
+      run: |
+        mkdir -v -p ~/.local/share/godot/templates
+        mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+    
+    - name: Run GUT Tests
+      run: |
+        godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd
+    
+    - name: Quality Check
+      run: |
+        chmod +x scripts/quality_check.sh
+        ./scripts/quality_check.sh
+    
+    - name: Export Game
+      run: |
+        mkdir -v -p builds/linux
+        godot --headless --verbose --export-release "Linux/X11" builds/linux/wedding-game.x86_64
+    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: wedding-game-linux
+        path: builds/linux/

@@ -1,0 +1,55 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "mcp-server-context7",
+      "args": [],
+      "env": {
+        "CONTEXT7_BASE_URL": "https://docs.godotengine.org",
+        "CONTEXT7_CACHE_DIR": ".claude/cache/context7"
+      },
+      "config": {
+        "libraries": [
+          {
+            "id": "godot",
+            "name": "Godot Engine",
+            "url": "https://docs.godotengine.org/en/stable/",
+            "topics": [
+              "2D",
+              "Animation",
+              "Audio",
+              "GDScript",
+              "Input",
+              "Physics",
+              "Scenes",
+              "Signals",
+              "UI"
+            ]
+          }
+        ]
+      }
+    },
+    "sequential": {
+      "command": "mcp-server-sequential",
+      "args": [],
+      "config": {
+        "thinking_modes": {
+          "game_logic": "Complex game mechanics and state management",
+          "architecture": "System design and code organization",
+          "performance": "Optimization and profiling",
+          "debugging": "Root cause analysis and troubleshooting"
+        }
+      }
+    },
+    "magic": {
+      "command": "mcp-server-magic",
+      "args": [],
+      "config": {
+        "ui_templates": {
+          "dialogue": "Dialogue boxes with character portraits",
+          "menu": "Game menus with retro styling",
+          "hud": "Health bars and status indicators"
+        }
+      }
+    }
+  }
+}

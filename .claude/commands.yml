@@ -1,0 +1,116 @@
+# Custom Claude Commands for Wedding Game Development
+
+commands:
+  # Game Development Commands
+  /gut:
+    description: "Run GUT tests with optional filter"
+    usage: "/gut [test_name]"
+    action: |
+      godot --headless -d -s --path . res://addons/gut/gut_cmdln.gd {args}
+
+  /scene:
+    description: "Analyze or create Godot scenes"
+    usage: "/scene analyze|create <scene_name>"
+    actions:
+      analyze: "Analyze scene structure and connections"
+      create: "Create new scene with proper setup"
+
+  /state-machine:
+    description: "Generate state machine boilerplate"
+    usage: "/state-machine <class_name> <states>"
+    template: |
+      extends Node
+      class_name {class_name}
+      
+      enum State { {states} }
+      var current_state: State = State.IDLE
+      
+      func transition_to(new_state: State) -> void:
+          exit_state(current_state)
+          current_state = new_state
+          enter_state(current_state)
+
+  /wedding-test:
+    description: "Create test file for wedding game feature"
+    usage: "/wedding-test <feature_name>"
+    action: "Create GUT test file with wedding game specific setup"
+
+  # Asset Management
+  /sprite-import:
+    description: "Import and configure sprite settings"
+    usage: "/sprite-import <path> [pixel_art|smooth]"
+    settings:
+      pixel_art:
+        filter: "Nearest"
+        mipmaps: false
+      smooth:
+        filter: "Linear"
+        mipmaps: true
+
+  # Performance Commands
+  /profile:
+    description: "Run performance profiling"
+    usage: "/profile <scene_name> [duration]"
+    outputs:
+      - FPS graph
+      - Draw calls
+      - Memory usage
+      - Bottleneck analysis
+
+  # Workflow Automation
+  /wedding-flow:
+    description: "Complete wedding game development workflow"
+    usage: "/wedding-flow <feature_name>"
+    steps:
+      1: "Create test file"
+      2: "Implement feature"
+      3: "Run tests"
+      4: "Profile performance"
+      5: "Update documentation"
+
+  # Git Integration
+  /wedding-commit:
+    description: "Commit with wedding game conventions"
+    usage: "/wedding-commit <type> <message>"
+    types:
+      - feat: "New feature"
+      - fix: "Bug fix"
+      - level: "Level design"
+      - art: "Art assets"
+      - audio: "Sound/music"
+      - perf: "Performance"
+
+  # Quick Actions
+  /mark:
+    description: "Switch to Mark character context"
+    action: "Load Mark's abilities and stats"
+
+  /jenny:
+    description: "Switch to Jenny character context"
+    action: "Load Jenny's abilities and stats"
+
+  /boss:
+    description: "Generate boss fight boilerplate"
+    usage: "/boss <boss_name> <phases>"
+    template: "Creates boss class with phase system"
+
+# Aliases for common operations
+aliases:
+  /t: /gut
+  /s: /scene
+  /sm: /state-machine
+  /wt: /wedding-test
+  /wf: /wedding-flow
+  /wc: /wedding-commit
+
+# Auto-triggers
+triggers:
+  on_file_pattern:
+    "*.tscn": "/scene analyze"
+    "test_*.gd": "/gut {filename}"
+    "*_boss.gd": "Check boss pattern implementation"
+  
+  on_error:
+    "null reference": "Check node paths and scene loading"
+    "cyclic reference": "Review scene inheritance"
+    "performance": "/profile current_scene"
